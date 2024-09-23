@@ -1,0 +1,19 @@
+USE [inbrokerdev]
+GO
+
+/****** Object:  Table [enaccion].[ambiente]    Script Date: 8/9/2024 9:44:21 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[enaccion].[ambiente]') AND type in (N'U'))
+DROP TABLE [enaccion].[ambiente]
+GO
+
+/****** Object:  Table [enaccion].[ambiente]    Script Date: 8/9/2024 9:44:21 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [enaccion].[traspaso](
+contenido varchar(1000)
+) ON [PRIMARY]
+GO

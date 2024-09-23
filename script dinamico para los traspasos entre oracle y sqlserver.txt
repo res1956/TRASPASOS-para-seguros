@@ -1,0 +1,49 @@
+declare @texto table ( descr varchar(1000))
+declare @trunca table (sentencia varchar(200))
+declare @inserta table (sentencia varchar(500))
+declare @cuenta table (sentencia varchar(500))
+declare @tabla varchar(100)
+
+'#carga las tablas que se deben traspasar - 
+BULK INSERT enaccion.traspaso
+FROM 'G:\eac\traspasos.txt'
+
+
+declare c1 cursor for 
+select contenido from enaccion.traspaso ;
+
+open c1
+fetch next from c1 into @tabla
+while @@fetch_status=0
+BEGIN
+   if substring(@tabla,1,2) = 'MG'
+      BEGIN
+	     insert into @cuenta values ('select ' + '''enaccion.' + @tabla + ''',count(1) from enaccion.' + @tabla)
+		 insert into @cuenta values ('select ' + '''dbo.' + @tabla + ''',count(1) from dbo.' + @tabla)
+	     insert into @trunca values ( 'TRUNCATE TABLE ENACCION.' + @tabla)
+		 insert into @inserta values( 'BEGIN TRAN 
+						  insert into dbo.' + @tabla + '
+						   select * from enaccion.'+@tabla + '
+	                       COMMIT TRAN ')
+	 END
+   else
+      BEGIN
+	     insert into @cuenta values ('select ' + '''enaccion.' + @tabla + ''',count(1) from enaccion.' + @tabla)
+		 insert into @inserta values( 'BEGIN TRAN 
+						  insert into ENACCION.' + @tabla + '
+						   select * from enaccion.'+@tabla + '
+	                       COMMIT TRAN ')	       
+	  END
+fetch next from c1 into @tabla
+END
+
+close c1
+deallocate c1
+
+select * from @cuenta 
+union all 
+select * from @trunca
+union all
+select * from @inserta
+
+
