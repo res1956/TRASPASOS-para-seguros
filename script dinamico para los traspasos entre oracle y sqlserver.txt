@@ -4,9 +4,9 @@ declare @inserta table (sentencia varchar(500))
 declare @cuenta table (sentencia varchar(500))
 declare @tabla varchar(100)
 
-'#carga las tablas que se deben traspasar - 
-BULK INSERT enaccion.traspaso
-FROM 'G:\eac\traspasos.txt'
+----'#carga las tablas que se deben traspasar - 
+----BULK INSERT enaccion.traspaso
+----FROM 'G:\eac\traspasos.txt'
 
 
 declare c1 cursor for 
