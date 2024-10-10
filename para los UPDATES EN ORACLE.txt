@@ -1,0 +1,3 @@
+oracle (secoggpr) [f1s01823]% cat carga.sh
+cat lista.txt | awk -v pp="'" ' { printf "update segmigcopr."$0" set ind_migrado="pp"S"pp" where ind_migrado="pp"N"pp";\n" } ' > upd.sql
+oracle (secoggpr) [f1s01823]%
